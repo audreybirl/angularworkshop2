@@ -1,0 +1,17 @@
+{
+  "name": "projecttest",
+  "version": "1.0.0",
+  "description": "test project",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Audrey Bennouar",
+  "license": "ISC",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "connect-modrewrite": "^0.9.0",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^4.0.0"
+  }
+}

@@ -1,0 +1,101 @@
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Overview</li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li ng-repeat="group in vm.groups"><a href="">{{ group.name }}</a></li>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder"
+                 ng-repeat="group in vm.groups">
+              <span class="text-muted">
+                <b> {{ group.name }} </b>
+              </span>
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                   width="{{ group.percent }}"
+                   height="{{ group.percent }}"
+                   class="img-responsive"
+                   alt="Generic placeholder thumbnail">
+              <span class="text-muted">
+                {{ group.location }}
+              </span>
+          </div>
+          <h2 class="sub-header">Sign Up</h2>
+          <div>
+	            <label>First Name</label>
+	            <input name="firstname"
+	                   type="text"
+	                   autocomplete="on"
+	                   ng-model="vm.saveuser.firstname" />
+	            <label>Last Name</label>
+	            <input name="lastname"
+	                   type="text"
+	                   autocomplete="on"
+	                   ng-model="vm.saveuser.lastname"/>
+		        <label>Email</label>
+		        <input name="email"
+	                   type="text"
+	                   autocomplete="on"
+	                   ng-model="vm.saveuser.email"/>
+		        <select name="group"
+                	width="150" ng-model="vm.saveuser.groupId">
+                    <option width="150" value="{{group.id}}" 
+                    		ng-repeat="group in vm.groups">{{ group.name }}</option>
+                </select>
+				    <button class="btn"
+                    ng-click="vm.saveUserToGroup()"
+                    title="Save">Save</button>
+          	</div>
+
+          <h2 class="sub-header">Section title</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>LastName</th>
+                  <th>Email</th>
+                  <th>GroupId</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="user in vm.users">
+                  <td>{{ user.firstname }}</td>
+                  <td>{{ user.lastname }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.groupname }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
