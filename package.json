@@ -12,6 +12,12 @@
     "bower": "^1.7.9",
     "connect-modrewrite": "^0.9.0",
     "gulp": "^3.9.1",
-    "gulp-connect": "^4.0.0"
+    "gulp-connect": "^4.0.0",
+    "gulp-eslint": "^2.0.0",
+    "eslint": "^2.8.0",
+    "eslint-plugin-angular": "^1.0.0",
+    "eslint-plugin-jasmine": "^1.8.1",
+    "eslint-plugin-lodash": "^1.8.2",
+    "eslint-plugin-protractor": "^1.5.0"
   }
 }

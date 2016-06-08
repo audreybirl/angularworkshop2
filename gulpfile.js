@@ -1,19 +1,14 @@
 
 var gulp = require('gulp');
-var connect = require('gulp-connect');
+    connect = require('gulp-connect'),
+    eslint = require('gulp-eslint'),
+    jsPath = [
+          'app/!(vendor)/**/*.js',
+          'test/**/*.js',
+          '!test/unit/dataMocks/**/*.js',
+          '!app/jadeTemplates.js'
+      ];
 
-/* plugins
-var connect = require('gulp-connect');
-
-gulp.task('default', function () {
-  connect.server({
-    root: 'app/',
-    port: 8888
-  });
-});*/
-
-
-// add near to the top of the file
 var proxyList = [
     '^/testendpoint/(.*)$ http://localhost:1337/$1 [P]',
     '^/groups/(.*)$ http://localhost:1337/$1 [P]'
@@ -33,3 +28,17 @@ gulp.task('default', function () {
       }
   });
 });
+
+gulp.task('eslint', function() {
+  return gulp.src(jsPath)
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+
+gulp.task('eslint:xml', function() {
+  return gulp.src(jsPath)
+    .pipe(eslint())
+    .pipe(eslint.format('checkstyle', fs.createWriteStream('checkstyle.xml')));
+});
+
