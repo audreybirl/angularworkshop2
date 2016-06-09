@@ -21,6 +21,10 @@
     "lodash": "4.11.1",
     "bootstrap": "^3.3.6",
     "angular-bootstrap": "*",
-    "underscore": "1.8.3"
+    "underscore": "1.8.3",
+    "angular-mocks": "1.5.5"
+  },
+  "resolutions": {
+    "angular": "1.5.5"
   }
 }

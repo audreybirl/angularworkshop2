@@ -7,7 +7,26 @@ var gulp = require('gulp');
           'test/**/*.js',
           '!test/unit/dataMocks/**/*.js',
           '!app/jadeTemplates.js'
-      ];
+    ],
+    getFiles = function () {
+      return [
+            'vendor/jquery/dist/jquery.js',
+            'vendor/angular/angular.js',
+            'vendor/angular-animate/angular-animate.js',
+            'vendor/angular-route/angular-route.js',
+            'vendor/angular-mocks/angular-mocks.js',
+            'vendor/lodash/lodash.js',
+            'config/*.js',
+            'core/**/*.js',
+            'hello/**/*.js',
+            'test/unit/**/*-spec.js'
+
+        
+      ]
+    },
+    del = require('del'),
+    karma = require('node-karma-wrapper'),
+    prereqs = ([]).concat('test:clean');
 
 var proxyList = [
     '^/testendpoint/(.*)$ http://localhost:1337/$1 [P]',
@@ -42,3 +61,21 @@ gulp.task('eslint:xml', function() {
     .pipe(eslint.format('checkstyle', fs.createWriteStream('checkstyle.xml')));
 });
 
+gulp.task('test:clean', function(callback) {
+  del([ 'coverage/*' ], callback);
+});
+
+gulp.task('test:unit', prereqs, function(callback) {
+  var karmaTest = karma({ configFile: 'app/test/karma.conf.js', files: getFiles() });
+  karmaTest.simpleRun(function (exitCode) {
+    if(exitCode !== 0) {
+      throw new Error('Unit Tests Failed');
+    }
+  });
+});
+
+gulp.task('watch:test:unit', prereqs, function () {
+  var karmaTest = karma({ configFile: 'app/test/karma.conf.js', files: getFiles() });
+  karmaTest.inBackground();
+  karmaTest.start();
+});

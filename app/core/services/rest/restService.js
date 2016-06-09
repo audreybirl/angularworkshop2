@@ -4,8 +4,7 @@ angular.module('SampleApp.core.services.rest',[]).
         function ($http, $q,  $window) { 'use strict';
 
     function makeRequest(method, url, data, headers) {
-    	var deferred = $q.defer();
-
+        var deferred = $q.defer();
             $http({
                 method: method,
                 url: url,
