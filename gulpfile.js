@@ -2,12 +2,16 @@
 var gulp = require('gulp');
     connect = require('gulp-connect'),
     eslint = require('gulp-eslint'),
+    _ = require('lodash'),
     jsPath = [
           'app/!(vendor)/**/*.js',
           'test/**/*.js',
           '!test/unit/dataMocks/**/*.js',
           '!app/jadeTemplates.js'
     ],
+    protractor = require('gulp-protractor'),
+    argv = require('yargs').argv,
+    logger = require('log4js').getLogger(),
     getFiles = function () {
       return [
             'vendor/jquery/dist/jquery.js',
@@ -19,14 +23,25 @@ var gulp = require('gulp');
             'config/*.js',
             'core/**/*.js',
             'hello/**/*.js',
-            'test/unit/**/*-spec.js'
-
-        
+            'test/unit/**/*-spec.js'       
       ]
     },
     del = require('del'),
     karma = require('node-karma-wrapper'),
-    prereqs = ([]).concat('test:clean');
+    prereqs = ([]).concat('test:clean'),
+    portfinder = require('portfinder'),
+    testPaths = {
+            protractor: {
+                configurationFile: 'app/test/protractor.conf.js'
+            },
+            functional: {
+                testFiles: 'app/test/functional/**/*-spec.js'
+            },
+            smoke: {
+                testFiles: 'test/smoke/**/*-spec.js'
+            }
+        };
+
 
 var proxyList = [
     '^/testendpoint/(.*)$ http://localhost:1337/$1 [P]',
@@ -79,3 +94,52 @@ gulp.task('watch:test:unit', prereqs, function () {
   karmaTest.inBackground();
   karmaTest.start();
 });
+
+
+gulp.task('webdriver_update', protractor.webdriver_update);
+
+function formattedArguments(args) {
+    return _(args).
+        pick('grid', 'baseUrl', 'env', 'parallel', 'useMocks').
+        map(function (value, key) {
+            return ['--' + key, value];
+        }).
+        flatten().
+        value();
+}
+
+function runProtractor(files, args) {
+    return gulp.src(files)
+        .pipe(protractor.protractor({
+            configFile: testPaths.protractor.configurationFile,
+            args: formattedArguments(args || argv)
+        }));
+}
+
+var integrationServerOptions = _.identity;
+
+gulp.task('test:functional', ['webdriver_update'], function(callback) {
+    var args = _.assign({
+        useMocks: true
+    }, argv);
+
+
+    if (args.env || args.baseUrl) {
+        return runProtractor([testPaths.functional.testFiles], args);
+    } else {
+        logger.info('Using connect local server');
+        return portfinder.getPort(function (__, port) {
+            connect.server(integrationServerOptions({
+                root: 'app',
+                port: port
+            }));
+            args.baseUrl = 'http://localhost:' + port + '/';
+            return runProtractor([testPaths.functional.testFiles], args)
+                .on('end', function () {
+                    connect.serverClose();
+                    callback();
+                });
+        });
+    }
+});
+
