@@ -1,5 +1,5 @@
 
-var gulp = require('gulp');
+var gulp = require('gulp'),
     connect = require('gulp-connect'),
     eslint = require('gulp-eslint'),
     _ = require('lodash'),
@@ -40,15 +40,13 @@ var gulp = require('gulp');
             smoke: {
                 testFiles: 'test/smoke/**/*-spec.js'
             }
-        };
-
-
-var proxyList = [
-    '^/testendpoint/(.*)$ http://localhost:1337/$1 [P]',
-    '^/groups/(.*)$ http://localhost:1337/$1 [P]'
-];
-
-var modRewrite = require('connect-modrewrite');
+    },
+    proxyList = [
+      '^/testendpoint/(.*)$ http://localhost:1337/$1 [P]',
+      '^/groups/(.*)$ http://localhost:1337/$1 [P]'
+    ],
+    modRewrite = require('connect-modrewrite'),
+    integrationServerOptions = _.identity;
 
 gulp.task('default', function () {
   connect.server({
@@ -116,7 +114,6 @@ function runProtractor(files, args) {
         }));
 }
 
-var integrationServerOptions = _.identity;
 
 gulp.task('test:functional', ['webdriver_update'], function(callback) {
     var args = _.assign({
