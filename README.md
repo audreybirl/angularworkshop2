@@ -3,16 +3,16 @@ AngularJs -> Workshop Part II
 
 ## Project Test 2 - AngularJS boiler plate
 
-This project includes the use of following 
-	 * Node
-	 * Bower
-	 * Gulp
-	 * MongoDb (Connects to an api that uses)
-	 * Sails
-	 * Bootstrap
-	 * eslint
-	 * Jasmine
-	 * Protractor
+This project includes the use of following  <br>
+	 * Node <br>
+	 * Bower <br>
+	 * Gulp <br>
+	 * MongoDb (Connects to an api that uses) <br>
+	 * Sails <br>
+	 * Bootstrap <br>
+	 * eslint <br>
+	 * Jasmine <br>
+	 * Protractor <br>
 
 ### Steps to run this project
 
@@ -36,6 +36,7 @@ This project includes the use of following
 
 	Show dbs
 	show collections
+	
 	```
 
 3. Install sails <br>
