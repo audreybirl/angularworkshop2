@@ -32,9 +32,6 @@ var _ = require('lodash'),
 
     options = options || {};
 
-    console.log('in HERERE');
-
-
     if (argv.grid) {
         logger.info('Using Selenium grid:', GRID_URL);
         config.capabilities.seleniumAddress = GRID_URL;
