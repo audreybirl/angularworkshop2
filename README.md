@@ -1,7 +1,6 @@
-# Project Test 2
-AngularJs -> Workshop Part II
+# AngularJs: Up & Running Workshop - Part II
 
-## Project Test 2 - AngularJS boiler plate
+## AngularJS boiler plate
 
 This project includes the use of following  <br>
 	 * Node <br>
