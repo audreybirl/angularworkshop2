@@ -1,8 +1,10 @@
 describe('angularjs homepage todo list', function() {
-  it('should add a todo', function() {
-    browser.get('http://localhost:8888/#!/');
 
-    browser.pause();
+  beforeEach(function() {
+    browser.driver.get('http://localhost:8888/#!/');
+  });
+
+  it('should add a todo', function() {
 
     element(by.model('todoList.todoText')).sendKeys('write first protractor test');
     element(by.css('[value="add"]')).click();

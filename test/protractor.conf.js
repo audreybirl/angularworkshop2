@@ -13,7 +13,6 @@ var _ = require('lodash'),
     dirName = '';
 
  function getConfig () {
-    
     var config = {
         // Really only useful locally (because it needs chrome/firefox)
         seleniumAddress:  'http://127.0.0.1:4444/wd/hub',

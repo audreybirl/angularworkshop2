@@ -1,4 +1,4 @@
-angular.module('SampleApp.core.services.rest').
+angular.module('workshopApp.core.services.rest').
     factory('userdetailsRestService', ['urlFactory', 'restService',
         function (urlFactory, restService) {
             'use strict';

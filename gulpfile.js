@@ -14,16 +14,18 @@ var gulp = require('gulp'),
     logger = require('log4js').getLogger(),
     getFiles = function () {
       return [
-            'vendor/jquery/dist/jquery.js',
-            'vendor/angular/angular.js',
-            'vendor/angular-animate/angular-animate.js',
-            'vendor/angular-route/angular-route.js',
-            'vendor/angular-mocks/angular-mocks.js',
-            'vendor/lodash/lodash.js',
-            'config/*.js',
-            'core/**/*.js',
-            'hello/**/*.js',
-            'test/unit/**/*-spec.js'       
+            'app/vendor/jquery/dist/jquery.js',
+            'app/vendor/angular/angular.js',
+            'app/vendor/angular-animate/angular-animate.js',
+            'app/vendor/angular-route/angular-route.js',
+            'app/vendor/angular-mocks/angular-mocks.js',
+            'app/vendor/lodash/lodash.js',
+            'app/config/*.js',
+            'app/core/**/*.js',
+            'app/user/userModule.js',
+            'app/user/userController.js',
+            'app/user/userRestService.js',
+            'test/unit/**/*-spec.js'
       ]
     },
     del = require('del'),
@@ -32,10 +34,10 @@ var gulp = require('gulp'),
     portfinder = require('portfinder'),
     testPaths = {
             protractor: {
-                configurationFile: 'app/test/protractor.conf.js'
+                configurationFile: 'test/protractor.conf.js'
             },
             functional: {
-                testFiles: 'app/test/functional/**/*-spec.js'
+                testFiles: 'test/functional/**/*-spec.js'
             },
             smoke: {
                 testFiles: 'test/smoke/**/*-spec.js'
@@ -79,7 +81,7 @@ gulp.task('test:clean', function(callback) {
 });
 
 gulp.task('test:unit', prereqs, function(callback) {
-  var karmaTest = karma({ configFile: 'app/test/karma.conf.js', files: getFiles() });
+  var karmaTest = karma({ configFile: 'test/karma.conf.js', files: getFiles() });
   karmaTest.simpleRun(function (exitCode) {
     if(exitCode !== 0) {
       throw new Error('Unit Tests Failed');
@@ -88,13 +90,16 @@ gulp.task('test:unit', prereqs, function(callback) {
 });
 
 gulp.task('watch:test:unit', prereqs, function () {
-  var karmaTest = karma({ configFile: 'app/test/karma.conf.js', files: getFiles() });
+  var karmaTest = karma({ configFile: 'test/karma.conf.js', files: getFiles() });
   karmaTest.inBackground();
   karmaTest.start();
 });
 
 
-gulp.task('webdriver_update', protractor.webdriver_update);
+gulp.task('webdriver_update', function(){
+  //'webdriver-manager start';
+  protractor.webdriver_update;
+});
 
 function formattedArguments(args) {
     return _(args).
@@ -116,6 +121,10 @@ function runProtractor(files, args) {
 
 
 gulp.task('test:functional', ['webdriver_update'], function(callback) {
+
+    console.log("inside the functional");
+    console.log(callback);
+
     var args = _.assign({
         useMocks: true
     }, argv);
