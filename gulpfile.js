@@ -1,16 +1,23 @@
 
 var gulp = require('gulp'),
     connect = require('gulp-connect'),
+    fs  = require('fs');
     eslint = require('gulp-eslint'),
+    gulpProtractorAngular = require('gulp-angular-protractor'),
     _ = require('lodash'),
     jsPath = [
-          'app/!(vendor)/**/*.js',
+          'app/config/*.js',
+          'app/core/**/*.js',
+          'app/user/userModule.js',
+          'app/user/userController.js',
+          'app/user/userRestService.js',
           'test/**/*.js',
           '!test/unit/dataMocks/**/*.js',
           '!app/jadeTemplates.js'
     ],
     protractor = require('gulp-protractor'),
     argv = require('yargs').argv,
+    //setProxy = true,
     logger = require('log4js').getLogger(),
     getFiles = function () {
       return [
@@ -25,7 +32,8 @@ var gulp = require('gulp'),
             'app/user/userModule.js',
             'app/user/userController.js',
             'app/user/userRestService.js',
-            'test/unit/**/*-spec.js'
+            'test/unit/**/*-spec.js',
+            'test/functional/mocks/*.js'
       ]
     },
     del = require('del'),
@@ -37,7 +45,7 @@ var gulp = require('gulp'),
                 configurationFile: 'test/protractor.conf.js'
             },
             functional: {
-                testFiles: 'test/functional/**/*-spec.js'
+                testFiles: 'test/functional/**/*.js'
             },
             smoke: {
                 testFiles: 'test/smoke/**/*-spec.js'
@@ -97,7 +105,6 @@ gulp.task('watch:test:unit', prereqs, function () {
 
 
 gulp.task('webdriver_update', function(){
-  //'webdriver-manager start';
   protractor.webdriver_update;
 });
 
@@ -120,32 +127,50 @@ function runProtractor(files, args) {
 }
 
 
-gulp.task('test:functional', ['webdriver_update'], function(callback) {
+//gulp.task('test:functional', ['webdriver_update'], function(callback) {
+//
+//    var args = _.assign({
+//        useMocks: true
+//    }, argv);
+//
+//
+//    if (args.env || args.baseUrl) {
+//        return runProtractor([testPaths.functional.testFiles], args);
+//    } else {
+//        logger.info('Using connect local server');
+//        return portfinder.getPort(function (__, port) {
+//            connect.server(integrationServerOptions({
+//                root: 'html',
+//                port: port
+//            }));
+//            args.baseUrl = 'http://localhost:' + port + '/';
+//            return runProtractor([testPaths.functional.testFiles], args)
+//                .on('end', function () {
+//                    connect.serverClose();
+//                    callback();
+//                });`
+//        });
+//    }
+//});
 
-    console.log("inside the functional");
-    console.log(callback);
-
-    var args = _.assign({
-        useMocks: true
-    }, argv);
-
-
-    if (args.env || args.baseUrl) {
-        return runProtractor([testPaths.functional.testFiles], args);
-    } else {
-        logger.info('Using connect local server');
-        return portfinder.getPort(function (__, port) {
-            connect.server(integrationServerOptions({
-                root: 'app',
-                port: port
-            }));
-            args.baseUrl = 'http://localhost:' + port + '/';
-            return runProtractor([testPaths.functional.testFiles], args)
-                .on('end', function () {
-                    connect.serverClose();
-                    callback();
-                });
-        });
-    }
+gulp.task('default:stop', function(){
+  connect.serverClose();
 });
+
+gulp.task('test:functional',['default'], function(callback) {
+  gulp
+      .src([testPaths.functional.testFiles])
+      .pipe(gulpProtractorAngular({
+        'configFile': 'test/protractor.conf.js',
+        'debug': false,
+        'autoStartStopServer': true
+      }))
+      .on('error', function(e) {
+        console.log(e);
+      })
+      .on('end',callback);
+
+});
+
+//gulp.task('test:functional',['e2e','default:stop']);
 

@@ -32,11 +32,13 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "node-karma-wrapper": "^0.3.0",
     "phantomjs": "^2.1.7",
-    "protractor": "3.3.0",
     "protractor-http-mock": "^0.1.16",
     "protractor-jasmine2-screenshot-reporter": "git+https://github.com/Juandeldesierto/protractor-jasmine2-screenshot-reporter.git",
     "yargs": "^3.20.0",
     "log4js": "^0.6.26",
     "portfinder": "^0.4.0"
+  },
+  "devDependencies": {
+    "gulp-angular-protractor": "^0.1.1"
   }
 }

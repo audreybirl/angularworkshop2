@@ -28,7 +28,8 @@ module.exports = function(config) { 'use strict';
             'app/config/*.js',
             'app/core/**/*.js',
             'app/user/**/*.js',
-            'test/unit/**/*-spec.js'
+            'test/unit/**/*-spec.js',
+            'test/functional/mocks/*.js'
         ],
 
 
