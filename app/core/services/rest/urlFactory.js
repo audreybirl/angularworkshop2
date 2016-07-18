@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 //core.services.rest
-    angular.module('SampleApp.core.services.rest').
+    angular.module('workshopApp.core.services.rest').
         factory('urlFactory', UrlFactory);
 
     UrlFactory.$inject = ['config', 'urlList'];

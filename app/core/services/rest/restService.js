@@ -1,22 +1,22 @@
-angular.module('SampleApp.core.services.rest',[]).
-    factory('restService',
+angular.module('workshopApp.core.services.rest',[]).
+factory('restService',
     ['$http', '$q', '$window',
         function ($http, $q,  $window) { 'use strict';
 
     function makeRequest(method, url, data, headers) {
         var deferred = $q.defer();
-            $http({
-                method: method,
-                url: url,
-                data: data,
-                headers: headers
-            }).then(function (response) {
-                deferred.resolve(response.data);
-            }).catch(function (response) {
+        $http({
+            method: method,
+            url: url,
+            data: data,
+            headers: headers
+        }).then(function (response) {
+            deferred.resolve(response.data);
+        }).catch(function (response) {
+          //suppose the catch the error here..
+        });
 
-            });
-
-            return deferred.promise;
+        return deferred.promise;
     }
 
     function get(url) {
@@ -37,11 +37,10 @@ angular.module('SampleApp.core.services.rest',[]).
 
     return {
     	get: get,
-        put: put,
-        post: post,
-        delete: _delete
-	};
-        
+      put: put,
+      post: post,
+      delete: _delete
+	  };
 
 }]);
 

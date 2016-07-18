@@ -8,26 +8,28 @@ module.exports = function(config) { 'use strict';
         frameworks: ['jasmine'],
 
         preprocessors: {
-            'app/features/**/*.html': ['ng-html2js'],
-            'hello/**/*.js' : 'coverage',
-            'core/services/rest/*.js' : 'coverage',
-            'config/*.js' : 'coverage'
+            'app/user/*.html': ['ng-html2js'],
+            'app/user/**/*.js' : 'coverage',
+            'app/core/services/rest/*.js' : 'coverage',
+            'app/config/*.js' : 'coverage'
         },
 
 
         // list of files / patterns to load in the browser
         // Filled in via index.html by gulp.
         files: [
-            'vendor/jquery/dist/jquery.js',
-            'vendor/angular/angular.js',
-            'vendor/angular-animate/angular-animate.js',
-            'vendor/angular-route/angular-route.js',
-            'vendor/angular-mocks/angular-mocks.js',
-            'vendor/lodash/lodash.js',
-            'config/*.js',
-            'core/**/*.js',
-            'hello/**/*.js',
-            'test/unit/**/*-spec.js'
+            'app/vendor/jquery/dist/jquery.js',
+            'app/vendor/angular/angular.js',
+            'app/vendor/angular-animate/angular-animate.js',
+            'app/vendor/angular-route/angular-route.js',
+            'app/vendor/angular-mocks/angular-mocks.js',
+            'app/vendor/lodash/lodash.js',
+            'app/routing.js',
+            'app/config/*.js',
+            'app/core/**/*.js',
+            'app/user/**/*.js',
+            'test/unit/**/*-spec.js',
+            'test/functional/mocks/*.js'
         ],
 
 

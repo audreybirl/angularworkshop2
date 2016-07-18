@@ -18,6 +18,6 @@
         }];
     }
 
-    angular.module('SampleApp.core.services.rest').provider('urlList', [urlListProvider]);
+    angular.module('workshopApp.core.services.rest').provider('urlList', [urlListProvider]);
 
 }());
